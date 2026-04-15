@@ -1,0 +1,76 @@
+---
+import { assetUrl } from '../data/site';
+
+const partners = [
+	{ name: 'Glassvice', href: 'https://www.glassvice.com', img: '/img/link/glassvice.jpg' },
+	{ name: 'Warmup', href: 'https://www.warmup.com', img: '/img/link/warmup.jpg' },
+	{ name: 'Warmtech', href: 'https://www.warmtech.com.au', img: '/img/link/warmtech.jpg' },
+	{ name: 'Sharpeye South', href: 'https://www.sharpeyesouth.co.nz', img: '/img/link/south.jpg' },
+	{ name: 'Aussie Steel', href: 'https://www.aussie-steel.com', img: '/img/link/Ausssie.jpg' },
+] as const;
+---
+
+<section class="section section--tight" id="partners" aria-labelledby="partners-title">
+	<div class="wrap">
+		<p class="section__label">Partners</p>
+		<h2 class="section__title" id="partners-title">Trusted suppliers alongside our in-house team.</h2>
+		<p class="section__lead">
+			We integrate complementary systems — heating, hardware, steel — so your specification stays coherent
+			end-to-end.
+		</p>
+		<ul class="partners">
+			{
+				partners.map((p) => (
+					<li>
+						<a class="partners__link" href={p.href} target="_blank" rel="noopener noreferrer">
+							<img src={assetUrl(p.img)} alt={p.name} width="200" height="80" loading="lazy" />
+							<span class="sr-only">{p.name}</span>
+						</a>
+					</li>
+				))
+			}
+		</ul>
+	</div>
+</section>
+
+<style>
+	.partners {
+		list-style: none;
+		margin: 2rem 0 0;
+		padding: 0;
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+		gap: 1rem;
+		align-items: center;
+	}
+
+	.partners__link {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		padding: 1rem 1.1rem;
+		border-radius: var(--radius);
+		border: 1px solid var(--line);
+		background: var(--bg-elevated);
+		box-shadow: var(--shadow);
+		transition:
+			border-color 0.2s,
+			transform 0.15s;
+	}
+
+	.partners__link:hover {
+		border-color: rgba(31, 143, 84, 0.35);
+		transform: translateY(-2px);
+	}
+
+	.partners__link img {
+		max-height: 48px;
+		width: auto;
+		object-fit: contain;
+		filter: grayscale(0.15);
+	}
+
+	.partners__link:hover img {
+		filter: none;
+	}
+</style>

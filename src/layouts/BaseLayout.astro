@@ -1,0 +1,89 @@
+---
+import '../styles/global.css';
+import { mediaBase, publicSiteUrl, site } from '../data/site';
+
+interface Props {
+	title: string;
+	description: string;
+}
+
+const { title, description } = Astro.props;
+
+const origin = publicSiteUrl;
+const canonicalHref = origin ? `${origin}/` : '/';
+const ogImage = origin ? `${origin}/favicon.svg` : null;
+
+const jsonLd = origin
+	? {
+			'@context': 'https://schema.org',
+			'@graph': [
+				{
+					'@type': 'Organization',
+					name: site.legalName,
+					url: origin,
+					logo: `${origin}/favicon.svg`,
+					email: site.email,
+					telephone: site.phoneTel,
+					sameAs: [site.linkedin, site.facebook],
+				},
+				{
+					'@type': 'LocalBusiness',
+					'@id': `${origin}/#localbusiness`,
+					name: site.legalName,
+					image: `${origin}/favicon.svg`,
+					url: origin,
+					telephone: site.phoneTel,
+					email: site.email,
+					address: {
+						'@type': 'PostalAddress',
+						streetAddress: site.address.street,
+						addressLocality: site.address.city,
+						addressCountry: 'NZ',
+					},
+					areaServed: 'NZ',
+					priceRange: '$$',
+				},
+				{
+					'@type': 'WebSite',
+					name: site.name,
+					url: origin,
+					description,
+					publisher: { '@id': `${origin}/#localbusiness` },
+				},
+			],
+		}
+	: null;
+---
+
+<!doctype html>
+<html lang="en-NZ">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta name="generator" content={Astro.generator} />
+		<title>{title}</title>
+		<meta name="description" content={description} />
+		<link rel="canonical" href={canonicalHref} />
+		<meta property="og:type" content="website" />
+		<meta property="og:title" content={title} />
+		<meta property="og:description" content={description} />
+		{origin ? <meta property="og:url" content={`${origin}/`} /> : null}
+		<meta property="og:locale" content="en_NZ" />
+		{ogImage ? <meta property="og:image" content={ogImage} /> : null}
+		<meta name="twitter:card" content={ogImage ? 'summary_large_image' : 'summary'} />
+		<meta name="twitter:title" content={title} />
+		<meta name="twitter:description" content={description} />
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link rel="dns-prefetch" href={mediaBase} />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap"
+			rel="stylesheet"
+		/>
+		{jsonLd ? <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} /> : null}
+	</head>
+	<body>
+		<slot />
+	</body>
+</html>

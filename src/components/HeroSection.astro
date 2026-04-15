@@ -1,0 +1,154 @@
+---
+import { assetUrl, mediaBase, publicSiteUrl, site } from '../data/site';
+---
+
+<section class="hero" id="top" aria-labelledby="hero-title">
+	<div class="hero__bg" aria-hidden="true"></div>
+	<div class="hero__content wrap">
+		<p class="hero__eyebrow">
+			{publicSiteUrl ? '' : 'Demo · '}
+			Auckland · glass, stone & building products · since {site.since}
+		</p>
+		<h1 class="hero__title" id="hero-title">
+			Glass fabrication, toughening, and installation — built around your project.
+		</h1>
+		<p class="hero__lead">
+			Sharpeye supplies and installs residential and commercial glass, engineered stone, stainless
+			accessories, and related building products across New Zealand — with in-house fabrication,
+			toughening, sandblasting, and water-jet cutting.
+		</p>
+		<div class="hero__actions">
+			<a class="btn btn--primary" href={`tel:${site.phoneTel}`}>Call {site.phoneDisplay}</a>
+			<a class="btn btn--ghost" href={`mailto:${site.email}`}>Email {site.email}</a>
+			<a class="btn btn--ghost" href={site.thetaUrl} target="_blank" rel="noopener noreferrer">
+				360° showroom
+			</a>
+		</div>
+		<dl class="hero__facts">
+			<div>
+				<dt>Location</dt>
+				<dd>{site.address.street}, {site.address.city}</dd>
+			</div>
+			<div>
+				<dt>Focus</dt>
+				<dd>Safety glass, balustrades, kitchens & bathrooms</dd>
+			</div>
+		</dl>
+	</div>
+	<video
+		class="hero__video"
+		autoplay
+		muted
+		loop
+		playsinline
+		preload="metadata"
+		poster={assetUrl('/img/portfolio/quay.jpg')}
+		aria-label="Background video of glass and architecture"
+	>
+		<source src={`${mediaBase}/img/header.mp4`} type="video/mp4" />
+	</video>
+</section>
+
+<style>
+	.hero {
+		position: relative;
+		min-height: clamp(520px, 78vh, 820px);
+		display: grid;
+		align-items: end;
+		padding-bottom: clamp(2.5rem, 5vw, 4rem);
+		color: #fff;
+		overflow: clip;
+	}
+
+	.hero__video {
+		position: absolute;
+		inset: 0;
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		z-index: 0;
+	}
+
+	.hero__bg {
+		position: absolute;
+		inset: 0;
+		z-index: 1;
+		background: linear-gradient(
+				180deg,
+				rgba(10, 14, 12, 0.55) 0%,
+				rgba(10, 14, 12, 0.35) 40%,
+				rgba(10, 14, 12, 0.82) 100%
+			),
+			radial-gradient(1200px 600px at 20% 0%, rgba(31, 143, 84, 0.35), transparent 55%);
+		pointer-events: none;
+	}
+
+	.hero__content {
+		position: relative;
+		z-index: 2;
+		padding-top: clamp(4rem, 12vw, 7rem);
+	}
+
+	.hero__eyebrow {
+		margin: 0 0 1rem;
+		font-size: 0.82rem;
+		letter-spacing: 0.12em;
+		text-transform: uppercase;
+		font-weight: 600;
+		color: rgba(255, 255, 255, 0.78);
+	}
+
+	.hero__title {
+		margin: 0 0 1rem;
+		font-size: clamp(2.1rem, 5vw, 3.35rem);
+		line-height: 1.08;
+		font-weight: 700;
+		max-width: 18ch;
+		letter-spacing: -0.03em;
+	}
+
+	.hero__lead {
+		margin: 0 0 1.75rem;
+		max-width: 58ch;
+		font-size: 1.08rem;
+		line-height: 1.65;
+		color: rgba(255, 255, 255, 0.88);
+	}
+
+	.hero__actions {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.65rem;
+		margin-bottom: 2rem;
+	}
+
+	.hero__facts {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+		gap: 1.25rem 2rem;
+		margin: 0;
+		padding: 1.25rem 0 0;
+		border-top: 1px solid rgba(255, 255, 255, 0.18);
+	}
+
+	.hero__facts dt {
+		font-size: 0.72rem;
+		letter-spacing: 0.12em;
+		text-transform: uppercase;
+		font-weight: 600;
+		color: rgba(255, 255, 255, 0.55);
+		margin: 0 0 0.25rem;
+	}
+
+	.hero__facts dd {
+		margin: 0;
+		font-weight: 600;
+		color: rgba(255, 255, 255, 0.95);
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.hero__video {
+			display: none;
+		}
+	}
+</style>

@@ -1,0 +1,83 @@
+---
+const faqs = [
+	{
+		q: 'Where is Sharpeye located?',
+		a: 'Our Auckland base is at 22–24 Porana Road. We supply and install projects across New Zealand in partnership with regional teams where required.',
+	},
+	{
+		q: 'What glass services do you provide?',
+		a: 'We fabricate and toughen glass in-house, offer sandblasting and water-jet cutting, and install balustrades, showers, partitions, canopies, shop fronts, mirrors, splashbacks, and safety laminated or toughened glazing.',
+	},
+	{
+		q: 'How do I request a quote?',
+		a: 'Call +64 (9) 443 4450 or email sales@sharpeye.co.nz with drawings, approximate sizes, and site address. We will confirm compliance path (e.g. NZS 4223) and schedule.',
+	},
+	{
+		q: 'What is Sharpeye Mate?',
+		a: 'Sharpeye Mate is our customer app for creating and tracking orders. Contact sales to enable access for your company.',
+	},
+] as const;
+
+const faqJson = {
+	'@context': 'https://schema.org',
+	'@type': 'FAQPage',
+	mainEntity: faqs.map((item) => ({
+		'@type': 'Question',
+		name: item.q,
+		acceptedAnswer: { '@type': 'Answer', text: item.a },
+	})),
+};
+---
+
+<section class="section" id="faq" aria-labelledby="faq-title">
+	<div class="wrap">
+		<p class="section__label">FAQ</p>
+		<h2 class="section__title" id="faq-title">Quick answers for specifiers and site teams.</h2>
+		<div class="faq">
+			{
+				faqs.map((item) => (
+					<details class="faq__item">
+						<summary>{item.q}</summary>
+						<p>{item.a}</p>
+					</details>
+				))
+			}
+		</div>
+	</div>
+	<script type="application/ld+json" set:html={JSON.stringify(faqJson)} />
+</section>
+
+<style>
+	.faq {
+		margin-top: 2rem;
+		display: flex;
+		flex-direction: column;
+		gap: 0.75rem;
+		max-width: 720px;
+	}
+
+	.faq__item {
+		border-radius: var(--radius);
+		border: 1px solid var(--line);
+		background: var(--bg-elevated);
+		padding: 0.35rem 1rem;
+		box-shadow: var(--shadow);
+	}
+
+	.faq__item summary {
+		cursor: pointer;
+		font-weight: 650;
+		padding-block: 0.65rem;
+		list-style: none;
+	}
+
+	.faq__item summary::-webkit-details-marker {
+		display: none;
+	}
+
+	.faq__item p {
+		margin: 0 0 0.85rem;
+		color: var(--ink-muted);
+		font-size: 0.98rem;
+	}
+</style>

@@ -1,0 +1,175 @@
+---
+import { site } from '../data/site';
+
+const year = new Date().getFullYear();
+---
+
+<footer class="footer">
+	<div class="wrap footer__top">
+		<div class="footer__brand">
+			<span class="footer__mark" aria-hidden="true"></span>
+			<div>
+				<strong>{site.name}</strong>
+				<p class="footer__tag">Glass · stone · steel · installation</p>
+			</div>
+		</div>
+		<div class="footer__cols">
+			<div>
+				<h3 class="footer__h">Explore</h3>
+				<ul>
+					<li><a href="#products">Products & services</a></li>
+					<li><a href="#portfolio">Portfolio</a></li>
+					<li><a href="#faq">FAQ</a></li>
+				</ul>
+			</div>
+			<div>
+				<h3 class="footer__h">Visit</h3>
+				<p>
+					{site.address.street}<br />
+					{site.address.city}
+				</p>
+			</div>
+			<div>
+				<h3 class="footer__h">Social</h3>
+				<ul class="footer__social">
+					<li>
+						<a href={site.linkedin} target="_blank" rel="noopener noreferrer">LinkedIn</a>
+					</li>
+					<li>
+						<a href={site.facebook} target="_blank" rel="noopener noreferrer">Facebook</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<div class="footer__bottom">
+		<div class="wrap footer__bottom-inner">
+			<p>© {year} {site.legalName}. All rights reserved.</p>
+			<p class="footer__legal">
+				<span>Demo layout — swap copy and assets for production.</span>
+				<span aria-hidden="true"> · </span>
+				<a href="/llms.txt">llms.txt</a>
+				<span aria-hidden="true"> · </span>
+				<a href="/robots.txt">robots.txt</a>
+			</p>
+		</div>
+	</div>
+</footer>
+
+<style>
+	.footer {
+		background: #0c0f0d;
+		color: rgba(255, 255, 255, 0.82);
+		margin-top: 0;
+	}
+
+	.footer a {
+		color: rgba(255, 255, 255, 0.88);
+		text-decoration: none;
+	}
+
+	.footer a:hover {
+		color: #fff;
+		text-decoration: underline;
+	}
+
+	.footer__top {
+		display: grid;
+		grid-template-columns: 1fr 2fr;
+		gap: 2.5rem;
+		padding-block: 3rem;
+	}
+
+	.footer__brand {
+		display: flex;
+		gap: 0.75rem;
+		align-items: flex-start;
+	}
+
+	.footer__mark {
+		width: 14px;
+		height: 14px;
+		border-radius: 4px;
+		background: linear-gradient(135deg, var(--brand), #2bb86f);
+		margin-top: 0.35rem;
+	}
+
+	.footer__tag {
+		margin: 0.35rem 0 0;
+		font-size: 0.92rem;
+		color: rgba(255, 255, 255, 0.6);
+	}
+
+	.footer__cols {
+		display: grid;
+		grid-template-columns: repeat(3, 1fr);
+		gap: 1.5rem;
+	}
+
+	.footer__h {
+		margin: 0 0 0.65rem;
+		font-size: 0.78rem;
+		letter-spacing: 0.12em;
+		text-transform: uppercase;
+		font-weight: 600;
+		color: rgba(255, 255, 255, 0.55);
+	}
+
+	.footer__cols ul {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+		display: flex;
+		flex-direction: column;
+		gap: 0.4rem;
+		font-size: 0.95rem;
+	}
+
+	.footer__cols p {
+		margin: 0;
+		font-size: 0.95rem;
+		line-height: 1.55;
+		color: rgba(255, 255, 255, 0.72);
+	}
+
+	.footer__social {
+		flex-direction: row;
+		flex-wrap: wrap;
+		gap: 0.75rem;
+	}
+
+	.footer__bottom {
+		border-top: 1px solid rgba(255, 255, 255, 0.1);
+		padding-block: 1.25rem;
+		font-size: 0.88rem;
+		color: rgba(255, 255, 255, 0.55);
+	}
+
+	.footer__bottom-inner {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.75rem 1.5rem;
+		justify-content: space-between;
+		align-items: center;
+	}
+
+	.footer__legal {
+		margin: 0;
+		max-width: 52ch;
+		text-align: right;
+	}
+
+	@media (max-width: 820px) {
+		.footer__top {
+			grid-template-columns: 1fr;
+		}
+
+		.footer__cols {
+			grid-template-columns: 1fr 1fr;
+		}
+
+		.footer__legal {
+			text-align: left;
+		}
+	}
+</style>

@@ -1,0 +1,32 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SiteHeader from '../components/SiteHeader.astro';
+import HeroSection from '../components/HeroSection.astro';
+import ProductsSection from '../components/ProductsSection.astro';
+import PortfolioSection from '../components/PortfolioSection.astro';
+import AppSection from '../components/AppSection.astro';
+import AboutSection from '../components/AboutSection.astro';
+import PartnersSection from '../components/PartnersSection.astro';
+import FaqSection from '../components/FaqSection.astro';
+import ContactSection from '../components/ContactSection.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+
+const title = 'Sharpeye — Glass & building products (demo one-pager)';
+const description =
+	'Demonstration single-page layout for a glass fabricator / importer: products, portfolio, app promo, about, partners, FAQ, and contact. Content is illustrative; deploy with your own domain and `PUBLIC_SITE_URL` when ready.';
+---
+
+<BaseLayout {title} {description}>
+	<SiteHeader />
+	<main>
+		<HeroSection />
+		<ProductsSection />
+		<PortfolioSection />
+		<AppSection />
+		<AboutSection />
+		<PartnersSection />
+		<FaqSection />
+		<ContactSection />
+	</main>
+	<SiteFooter />
+</BaseLayout>

@@ -1,0 +1,15 @@
+# Sharpeye — single-page demo
+
+> This repository builds a **design / layout demonstration** for a one-page glass & building-products company site. It is not tied to any particular production hostname unless you configure one at build time.
+
+## Build-time option
+- Set `PUBLIC_SITE_URL` (e.g. `https://your-demo.pages.dev`) to emit absolute Open Graph URLs and JSON-LD for that origin. If unset, the page uses a **relative canonical** (`/`) and skips structured data that would require a stable site URL.
+
+## Reference media
+- Some images and video load from a third-party reference host (`sharpeye.co.nz`) for convenience during the demo. Replace with your own assets under `public/` when you harden the site.
+
+## Contact (content sample only)
+- Phone and email in the page copy are **examples** taken from the reference brand; update `src/data/site.ts` for a real deployment.
+
+## Sections
+- #products #portfolio #app #about #partners #faq #contact

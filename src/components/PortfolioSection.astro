@@ -1,0 +1,91 @@
+---
+import { Image } from 'astro:assets';
+import { assetUrl, portfolio } from '../data/site';
+---
+
+<section class="section section--muted" id="portfolio" aria-labelledby="portfolio-title">
+	<div class="wrap">
+		<p class="section__label">Portfolio</p>
+		<h2 class="section__title" id="portfolio-title">Selected completed projects across Auckland and wider New Zealand.</h2>
+		<p class="section__lead">
+			From medical centres to retail roll-outs and premium apartments — consistent detailing and
+			compliance-focused glazing.
+		</p>
+		<ul class="portfolio">
+			{
+				portfolio.map((item) => (
+					<li class="portfolio__item">
+						<figure class="portfolio__figure">
+							<Image
+								src={assetUrl(item.src)}
+								alt={item.title}
+								width={800}
+								height={520}
+								loading="lazy"
+								decoding="async"
+								sizes="(max-width: 640px) 100vw, (max-width: 960px) 50vw, 33vw"
+								class="portfolio__img"
+							/>
+							<figcaption class="portfolio__cap">
+								<span class="portfolio__name">{item.title}</span>
+								{item.year ? <span class="portfolio__year">{item.year}</span> : null}
+							</figcaption>
+						</figure>
+					</li>
+				))
+			}
+		</ul>
+	</div>
+</section>
+
+<style>
+	.section--muted {
+		background: linear-gradient(180deg, #eef1ec 0%, var(--bg) 100%);
+		border-block: 1px solid var(--line);
+	}
+
+	.portfolio {
+		list-style: none;
+		margin: 2.25rem 0 0;
+		padding: 0;
+		display: grid;
+		gap: 1.25rem;
+		grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+	}
+
+	.portfolio__figure {
+		margin: 0;
+		border-radius: var(--radius-lg);
+		overflow: hidden;
+		border: 1px solid var(--line);
+		background: var(--bg-elevated);
+		box-shadow: var(--shadow);
+	}
+
+	.portfolio__img {
+		width: 100%;
+		height: auto;
+		aspect-ratio: 800 / 520;
+		object-fit: cover;
+	}
+
+	.portfolio__cap {
+		display: flex;
+		flex-direction: column;
+		gap: 0.2rem;
+		padding: 1rem 1.1rem 1.15rem;
+	}
+
+	.portfolio__name {
+		font-weight: 650;
+		font-size: 0.98rem;
+		line-height: 1.35;
+		color: var(--ink);
+	}
+
+	.portfolio__year {
+		font-size: 0.85rem;
+		font-weight: 600;
+		color: var(--brand-dark);
+	}
+</style>
