@@ -61,6 +61,27 @@ export const products = [
 		icon: 'more',
 	},
 	{
+		title: 'Pool barriers & safety glazing',
+		description:
+			'Compliant barrier glass for pools, decks, and stairs — toughened and laminated options sized to NZ Building Code pathways, supplied and installed with documentation ready for council and certifiers.',
+		href: '#contact',
+		icon: 'barrier',
+	},
+	{
+		title: 'High-performance & retrofit glazing',
+		description:
+			'Double glazing and performance coatings for warmer, drier interiors — new joinery packages plus retrofits where existing frames can accept upgraded IGU build-ups matched to climate zone and façade intent.',
+		href: '#contact',
+		icon: 'retrofit',
+	},
+	{
+		title: 'Shop drawings, site measure & coordination',
+		description:
+			'Field verification, issue drawings, and programme alignment with architects, main contractors, and joiners — so balustrades, kitchens, and façades hit site dates without rework.',
+		href: '#contact',
+		icon: 'coord',
+	},
+	{
 		title: 'Fabrication & services',
 		description:
 			'Glass fabricating, toughening, sandblasting, water-jet cutting, design support, and installation for balustrades, bathrooms, kitchens, offices, canopies, and handrails.',

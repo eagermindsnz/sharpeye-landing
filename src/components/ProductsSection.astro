@@ -14,6 +14,15 @@ function iconSvg(kind: (typeof products)[number]['icon']) {
 		service: s(
 			'<path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>',
 		),
+		barrier: s(
+			'<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/>',
+		),
+		retrofit: s(
+			'<rect x="3" y="5" width="18" height="14" rx="2"/><path d="M12 5v14M3 12h18"/><path d="M7 9h.01M17 15h.01"/>',
+		),
+		coord: s(
+			'<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M8 13h8M8 17h6"/>',
+		),
 	};
 	return paths[kind];
 }
@@ -24,8 +33,9 @@ function iconSvg(kind: (typeof products)[number]['icon']) {
 		<p class="section__label">Products & services</p>
 		<h2 class="section__title" id="products-title">Everything for the envelope — glass, stone, steel, and site support.</h2>
 		<p class="section__lead">
-			Whether you are specifying a high-rise balustrade or a kitchen fit-out, Sharpeye combines imported
-			lines with local fabrication so schedules stay predictable.
+			From Auckland across New Zealand: imported lines plus local toughening and fabrication — with the
+			documentation, compliance thinking, and site coordination specifiers and main contractors expect on
+			today’s programmes.
 		</p>
 		<div class="card-grid section__grid">
 			{
@@ -47,5 +57,6 @@ function iconSvg(kind: (typeof products)[number]['icon']) {
 <style>
 	.section__grid {
 		margin-top: 2.25rem;
+		grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
 	}
 </style>
