@@ -156,11 +156,12 @@ const formAction = formspreeId?.trim() ? `https://formspree.io/f/${formspreeId.t
 			if (first) first.focus();
 		}
 
-		document.querySelectorAll('[data-open-inquiry]').forEach(function (el) {
-			el.addEventListener('click', function (e) {
-				e.preventDefault();
-				open();
-			});
+		/* Event delegation: this script runs before <main> exists, so per-element listeners would miss hero/contact/etc. */
+		document.addEventListener('click', function (e) {
+			const trigger = e.target && e.target.closest && e.target.closest('[data-open-inquiry]');
+			if (!trigger) return;
+			e.preventDefault();
+			open();
 		});
 
 		dlg.querySelector('.inq__close')?.addEventListener('click', function () {

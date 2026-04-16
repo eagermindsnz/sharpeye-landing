@@ -68,6 +68,8 @@ import { assetUrl, mediaBase, publicSiteUrl, site } from '../data/site';
 		height: 100%;
 		object-fit: cover;
 		z-index: 0;
+		/* Decorative layer — do not steal clicks from text/buttons (esp. beside narrow .wrap). */
+		pointer-events: none;
 	}
 
 	.hero__bg {
@@ -88,6 +90,7 @@ import { assetUrl, mediaBase, publicSiteUrl, site } from '../data/site';
 		position: relative;
 		z-index: 2;
 		padding-top: clamp(4rem, 12vw, 7rem);
+		pointer-events: auto;
 	}
 
 	.hero__eyebrow {
