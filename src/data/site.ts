@@ -5,6 +5,14 @@
  */
 export const publicSiteUrl = (import.meta.env.PUBLIC_SITE_URL as string | undefined)?.replace(/\/$/, '') ?? '';
 
+/**
+ * Formspree form id (endpoint `https://formspree.io/f/<id>`).
+ * Set `PUBLIC_FORMSPREE_ID` at build time to override; otherwise this default is used so Vercel/GitHub builds still submit without extra env.
+ * File uploads in the browser still require a Formspree plan that includes file storage — see https://formspree.io/plans
+ */
+const formspreeFromEnv = (import.meta.env.PUBLIC_FORMSPREE_ID as string | undefined)?.trim();
+export const formspreeFormId = formspreeFromEnv || 'xrerejjk';
+
 /** Hotlinked reference media for this demo (portfolio, video, partner marks). */
 export const mediaBase = 'https://sharpeye.co.nz';
 

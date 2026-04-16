@@ -1,8 +1,7 @@
 ---
-import { site } from '../data/site';
+import { formspreeFormId } from '../data/site';
 
-const formspreeId = import.meta.env.PUBLIC_FORMSPREE_ID as string | undefined;
-const formAction = formspreeId?.trim() ? `https://formspree.io/f/${formspreeId.trim()}` : '';
+const formAction = `https://formspree.io/f/${formspreeFormId}`;
 ---
 
 <dialog id="inquiry-dialog" class="inq" aria-labelledby="inquiry-title">
@@ -19,17 +18,13 @@ const formAction = formspreeId?.trim() ? `https://formspree.io/f/${formspreeId.t
 			id="inquiry-form"
 			class="inq__form"
 			method="post"
-			action={formAction || undefined}
-			enctype={formAction ? 'multipart/form-data' : undefined}
-			data-has-formspree={formAction ? 'true' : 'false'}
-			data-mailto={site.email}
+			action={formAction}
+			enctype="multipart/form-data"
 		>
-			{formAction ? (
-				<div class="sr-only" aria-hidden="true">
-					<input type="hidden" name="_subject" value="Website project inquiry" />
-					<input type="hidden" name="_replyto" id="inq-replyto" value="" />
-				</div>
-			) : null}
+			<div class="sr-only" aria-hidden="true">
+				<input type="hidden" name="_subject" value="Website project inquiry" />
+				<input type="hidden" name="_replyto" id="inq-replyto" value="" />
+			</div>
 
 			<div class="inq__grid">
 				<div class="inq__field">
@@ -89,32 +84,21 @@ const formAction = formspreeId?.trim() ? `https://formspree.io/f/${formspreeId.t
 						placeholder="Products (e.g. balustrade, splashback), sizes if known, site suburb, consent / wind zone if relevant…"
 					></textarea>
 				</div>
-				{
-					formAction ? (
-						<div class="inq__field inq__field--full">
-							<label for="inq-files">Drawings / photos <span class="inq__opt">(optional)</span></label>
-							<input
-								id="inq-files"
-								class="inq__file"
-								type="file"
-								name="attachment"
-								multiple
-								accept=".pdf,.dwg,.dxf,.zip,.rar,.7z,image/jpeg,image/png,image/webp,image/heic"
-							/>
-							<p class="inq__filehint">
-								PDF, images, CAD (DWG/DXF), or zipped sets. Large files: use a share link in the message instead.
-							</p>
-						</div>
-					) : (
-						<div class="inq__field inq__field--full inq__filefallback">
-							<p class="inq__filehint">
-								<strong>No web form endpoint yet.</strong> To send drawings, either configure Formspree file uploads
-								or paste a Dropbox / Google Drive / OneDrive link in the message above — email submit cannot attach
-								local files.
-							</p>
-						</div>
-					)
-				}
+				<div class="inq__field inq__field--full">
+					<label for="inq-files">Drawings / photos <span class="inq__opt">(optional)</span></label>
+					<input
+						id="inq-files"
+						class="inq__file"
+						type="file"
+						name="attachment"
+						multiple
+						accept=".pdf,.dwg,.dxf,.zip,.rar,.7z,image/jpeg,image/png,image/webp,image/heic"
+					/>
+					<p class="inq__filehint">
+						PDF, images, CAD (DWG/DXF), or zipped sets. Very large files: paste a Dropbox / Drive / OneDrive link in
+						the message. Uploads require a Formspree plan that includes file storage.
+					</p>
+				</div>
 			</div>
 
 			<p class="inq__hp" aria-hidden="true">
@@ -128,9 +112,8 @@ const formAction = formspreeId?.trim() ? `https://formspree.io/f/${formspreeId.t
 			</label>
 
 			<p class="inq__fineprint">
-				{formAction
-					? 'Submitted via Formspree. File uploads require a Formspree plan that includes uploads; keep each file modest in size.'
-					: 'No form endpoint configured — your email app will open with this enquiry (add PUBLIC_FORMSPREE_ID for web submit + optional files).'}
+				Submitted via Formspree. File attachments only work if your Formspree account includes uploads; otherwise
+				add a share link in the message. Keep files reasonably small.
 			</p>
 
 			<div class="inq__actions">
@@ -146,9 +129,6 @@ const formAction = formspreeId?.trim() ? `https://formspree.io/f/${formspreeId.t
 		const dlg = document.getElementById('inquiry-dialog');
 		const form = document.getElementById('inquiry-form');
 		if (!dlg || !form) return;
-
-		const useFormspree = form.getAttribute('data-has-formspree') === 'true';
-		const mailto = form.getAttribute('data-mailto') || '';
 
 		function open() {
 			dlg.showModal();
@@ -182,26 +162,9 @@ const formAction = formspreeId?.trim() ? `https://formspree.io/f/${formspreeId.t
 				return;
 			}
 
-			if (useFormspree) {
-				const reply = form.querySelector('#inq-replyto');
-				const email = form.querySelector('input[name="email"]');
-				if (reply && email instanceof HTMLInputElement) reply.value = email.value;
-				return;
-			}
-
-			e.preventDefault();
-			const fd = new FormData(form);
-			const lines = [];
-			fd.forEach(function (v, k) {
-				if (k === 'company_website') return;
-				if (typeof v !== 'string') return;
-				lines.push(k + ': ' + v);
-			});
-			const body = lines.join('\n');
-			const subject = encodeURIComponent('Website project inquiry');
-			window.location.href =
-				'mailto:' + encodeURIComponent(mailto) + '?subject=' + subject + '&body=' + encodeURIComponent(body);
-			dlg.close();
+			const reply = form.querySelector('#inq-replyto');
+			const email = form.querySelector('input[name="email"]');
+			if (reply && email instanceof HTMLInputElement) reply.value = email.value;
 		});
 	})();
 </script>
