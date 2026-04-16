@@ -1,0 +1,384 @@
+---
+import { site } from '../data/site';
+
+const formspreeId = import.meta.env.PUBLIC_FORMSPREE_ID as string | undefined;
+const formAction = formspreeId?.trim() ? `https://formspree.io/f/${formspreeId.trim()}` : '';
+---
+
+<dialog id="inquiry-dialog" class="inq" aria-labelledby="inquiry-title">
+	<div class="inq__panel">
+		<header class="inq__head">
+			<div>
+				<h2 class="inq__title" id="inquiry-title">Project inquiry</h2>
+				<p class="inq__sub">Tell us who you are and what you need — we will follow up by phone or email.</p>
+			</div>
+			<button type="button" class="inq__close" aria-label="Close dialog">&times;</button>
+		</header>
+
+		<form
+			id="inquiry-form"
+			class="inq__form"
+			method="post"
+			action={formAction || undefined}
+			enctype={formAction ? 'multipart/form-data' : undefined}
+			data-has-formspree={formAction ? 'true' : 'false'}
+			data-mailto={site.email}
+		>
+			{formAction ? (
+				<div class="sr-only" aria-hidden="true">
+					<input type="hidden" name="_subject" value="Website project inquiry" />
+					<input type="hidden" name="_replyto" id="inq-replyto" value="" />
+				</div>
+			) : null}
+
+			<div class="inq__grid">
+				<div class="inq__field">
+					<label for="inq-name">Full name <span class="inq__req">*</span></label>
+					<input id="inq-name" name="name" type="text" required autocomplete="name" />
+				</div>
+				<div class="inq__field">
+					<label for="inq-email">Email <span class="inq__req">*</span></label>
+					<input id="inq-email" name="email" type="email" required autocomplete="email" />
+				</div>
+				<div class="inq__field">
+					<label for="inq-phone">Phone</label>
+					<input id="inq-phone" name="phone" type="tel" autocomplete="tel" />
+				</div>
+				<div class="inq__field">
+					<label for="inq-company">Company / practice</label>
+					<input id="inq-company" name="company" type="text" autocomplete="organization" />
+				</div>
+				<div class="inq__field inq__field--full">
+					<label for="inq-role">You are <span class="inq__req">*</span></label>
+					<select id="inq-role" name="role" required>
+						<option value="" disabled selected>Select…</option>
+						<option value="Homeowner">Homeowner</option>
+						<option value="Builder / contractor">Builder / contractor</option>
+						<option value="Architect / designer">Architect / designer</option>
+						<option value="Joinery / shopfitter">Joinery / shopfitter</option>
+						<option value="Glazing trade">Glazing trade</option>
+						<option value="Developer">Developer</option>
+						<option value="Other">Other</option>
+					</select>
+				</div>
+				<div class="inq__field">
+					<label for="inq-project">Project type <span class="inq__req">*</span></label>
+					<select id="inq-project" name="project_type" required>
+						<option value="" disabled selected>Select…</option>
+						<option value="Residential">Residential</option>
+						<option value="Commercial">Commercial</option>
+						<option value="Mixed / multiple">Mixed / multiple</option>
+					</select>
+				</div>
+				<div class="inq__field">
+					<label for="inq-timeline">Timeline</label>
+					<select id="inq-timeline" name="timeline">
+						<option value="Not sure">Not sure</option>
+						<option value="ASAP">ASAP</option>
+						<option value="1–3 months">1–3 months</option>
+						<option value="3+ months">3+ months</option>
+					</select>
+				</div>
+				<div class="inq__field inq__field--full">
+					<label for="inq-message">Scope & questions <span class="inq__req">*</span></label>
+					<textarea
+						id="inq-message"
+						name="message"
+						rows="4"
+						required
+						placeholder="Products (e.g. balustrade, splashback), sizes if known, site suburb, consent / wind zone if relevant…"
+					></textarea>
+				</div>
+				{
+					formAction ? (
+						<div class="inq__field inq__field--full">
+							<label for="inq-files">Drawings / photos <span class="inq__opt">(optional)</span></label>
+							<input
+								id="inq-files"
+								class="inq__file"
+								type="file"
+								name="attachment"
+								multiple
+								accept=".pdf,.dwg,.dxf,.zip,.rar,.7z,image/jpeg,image/png,image/webp,image/heic"
+							/>
+							<p class="inq__filehint">
+								PDF, images, CAD (DWG/DXF), or zipped sets. Large files: use a share link in the message instead.
+							</p>
+						</div>
+					) : (
+						<div class="inq__field inq__field--full inq__filefallback">
+							<p class="inq__filehint">
+								<strong>No web form endpoint yet.</strong> To send drawings, either configure Formspree file uploads
+								or paste a Dropbox / Google Drive / OneDrive link in the message above — email submit cannot attach
+								local files.
+							</p>
+						</div>
+					)
+				}
+			</div>
+
+			<p class="inq__hp" aria-hidden="true">
+				<label for="inq-company-web">Company website</label>
+				<input id="inq-company-web" name="company_website" type="text" tabindex="-1" autocomplete="off" />
+			</p>
+
+			<label class="inq__consent">
+				<input type="checkbox" name="consent" value="yes" required />
+				<span>I agree to be contacted about this enquiry.</span>
+			</label>
+
+			<p class="inq__fineprint">
+				{formAction
+					? 'Submitted via Formspree. File uploads require a Formspree plan that includes uploads; keep each file modest in size.'
+					: 'No form endpoint configured — your email app will open with this enquiry (add PUBLIC_FORMSPREE_ID for web submit + optional files).'}
+			</p>
+
+			<div class="inq__actions">
+				<button type="button" class="btn btn--outline inq__cancel">Cancel</button>
+				<button type="submit" class="btn btn--primary">Send inquiry</button>
+			</div>
+		</form>
+	</div>
+</dialog>
+
+<script is:inline>
+	(function () {
+		const dlg = document.getElementById('inquiry-dialog');
+		const form = document.getElementById('inquiry-form');
+		if (!dlg || !form) return;
+
+		const useFormspree = form.getAttribute('data-has-formspree') === 'true';
+		const mailto = form.getAttribute('data-mailto') || '';
+
+		function open() {
+			dlg.showModal();
+			const first = form.querySelector('input:not([type="hidden"]), select, textarea');
+			if (first) first.focus();
+		}
+
+		document.querySelectorAll('[data-open-inquiry]').forEach(function (el) {
+			el.addEventListener('click', function (e) {
+				e.preventDefault();
+				open();
+			});
+		});
+
+		dlg.querySelector('.inq__close')?.addEventListener('click', function () {
+			dlg.close();
+		});
+		dlg.querySelector('.inq__cancel')?.addEventListener('click', function () {
+			dlg.close();
+		});
+
+		dlg.addEventListener('click', function (e) {
+			if (e.target === dlg) dlg.close();
+		});
+
+		form.addEventListener('submit', function (e) {
+			const hp = form.querySelector('input[name="company_website"]');
+			if (hp && hp.value) {
+				e.preventDefault();
+				return;
+			}
+
+			if (useFormspree) {
+				const reply = form.querySelector('#inq-replyto');
+				const email = form.querySelector('input[name="email"]');
+				if (reply && email instanceof HTMLInputElement) reply.value = email.value;
+				return;
+			}
+
+			e.preventDefault();
+			const fd = new FormData(form);
+			const lines = [];
+			fd.forEach(function (v, k) {
+				if (k === 'company_website') return;
+				if (typeof v !== 'string') return;
+				lines.push(k + ': ' + v);
+			});
+			const body = lines.join('\n');
+			const subject = encodeURIComponent('Website project inquiry');
+			window.location.href =
+				'mailto:' + encodeURIComponent(mailto) + '?subject=' + subject + '&body=' + encodeURIComponent(body);
+			dlg.close();
+		});
+	})();
+</script>
+
+<style>
+	.inq {
+		padding: 0;
+		border: none;
+		max-width: calc(100vw - 2rem);
+		width: 34rem;
+		background: transparent;
+	}
+
+	.inq::backdrop {
+		background: rgba(12, 16, 14, 0.45);
+	}
+
+	.inq__panel {
+		background: var(--bg-elevated);
+		border-radius: var(--radius-lg);
+		border: 1px solid var(--line);
+		box-shadow: var(--shadow);
+		padding: 1.35rem 1.35rem 1.25rem;
+		max-height: min(90vh, 44rem);
+		overflow: auto;
+	}
+
+	.inq__head {
+		display: flex;
+		justify-content: space-between;
+		align-items: flex-start;
+		gap: 1rem;
+		margin-bottom: 1.15rem;
+	}
+
+	.inq__title {
+		margin: 0 0 0.35rem;
+		font-size: 1.35rem;
+		font-weight: 700;
+		letter-spacing: -0.02em;
+	}
+
+	.inq__sub {
+		margin: 0;
+		font-size: 0.92rem;
+		color: var(--ink-muted);
+		line-height: 1.45;
+		max-width: 36ch;
+	}
+
+	.inq__close {
+		border: none;
+		background: transparent;
+		font-size: 1.75rem;
+		line-height: 1;
+		cursor: pointer;
+		color: var(--ink-muted);
+		padding: 0.15rem 0.35rem;
+		border-radius: 8px;
+	}
+
+	.inq__close:hover {
+		color: var(--ink);
+		background: rgba(14, 18, 16, 0.06);
+	}
+
+	.inq__grid {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		gap: 0.85rem 1rem;
+	}
+
+	.inq__field {
+		display: flex;
+		flex-direction: column;
+		gap: 0.3rem;
+	}
+
+	.inq__field--full {
+		grid-column: 1 / -1;
+	}
+
+	.inq__field label {
+		font-size: 0.82rem;
+		font-weight: 600;
+		color: var(--ink-muted);
+	}
+
+	.inq__req {
+		color: var(--accent);
+	}
+
+	.inq__opt {
+		font-weight: 500;
+		color: var(--ink-muted);
+	}
+
+	.inq__file {
+		font: inherit;
+		font-size: 0.88rem;
+		padding: 0.45rem 0;
+	}
+
+	.inq__filehint {
+		margin: 0.25rem 0 0;
+		font-size: 0.78rem;
+		color: var(--ink-muted);
+		line-height: 1.4;
+	}
+
+	.inq__filefallback {
+		margin-top: 0.15rem;
+	}
+
+	.inq__field input,
+	.inq__field select,
+	.inq__field textarea {
+		font: inherit;
+		padding: 0.55rem 0.65rem;
+		border-radius: 10px;
+		border: 1px solid var(--line);
+		background: #fff;
+		color: var(--ink);
+	}
+
+	.inq__field textarea {
+		resize: vertical;
+		min-height: 5.5rem;
+	}
+
+	.inq__field input:focus-visible,
+	.inq__field select:focus-visible,
+	.inq__field textarea:focus-visible {
+		outline: 2px solid var(--brand);
+		outline-offset: 1px;
+	}
+
+	.inq__hp {
+		position: absolute;
+		left: -9999px;
+		width: 1px;
+		height: 1px;
+		overflow: hidden;
+	}
+
+	.inq__consent {
+		display: flex;
+		gap: 0.55rem;
+		align-items: flex-start;
+		margin-top: 1rem;
+		font-size: 0.88rem;
+		color: var(--ink-muted);
+		cursor: pointer;
+	}
+
+	.inq__consent input {
+		margin-top: 0.2rem;
+		flex-shrink: 0;
+	}
+
+	.inq__fineprint {
+		margin: 0.75rem 0 0;
+		font-size: 0.78rem;
+		color: var(--ink-muted);
+		line-height: 1.4;
+	}
+
+	.inq__actions {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: flex-end;
+		gap: 0.65rem;
+		margin-top: 1.15rem;
+	}
+
+	@media (max-width: 520px) {
+		.inq__grid {
+			grid-template-columns: 1fr;
+		}
+	}
+</style>

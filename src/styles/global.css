@@ -168,6 +168,22 @@ a:hover {
 	color: #fff;
 }
 
+button.btn {
+	font: inherit;
+}
+
+.btn--outline {
+	background: transparent;
+	color: var(--ink);
+	border-color: rgba(14, 18, 16, 0.22);
+}
+
+.btn--outline:hover {
+	background: rgba(14, 18, 16, 0.04);
+	border-color: rgba(14, 18, 16, 0.32);
+	color: var(--ink);
+}
+
 .card-grid {
 	display: grid;
 	gap: 1.25rem;

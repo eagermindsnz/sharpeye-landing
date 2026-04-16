@@ -28,7 +28,8 @@ import { site } from '../data/site';
 				<a href={`mailto:${site.email}`}>{site.email}</a>
 			</p>
 			<div class="contact__actions">
-				<a class="btn btn--primary" href={`mailto:${site.email}?subject=Project%20enquiry`}>Email the team</a>
+				<button type="button" class="btn btn--primary" data-open-inquiry>Inquiry</button>
+				<a class="btn btn--outline" href={`mailto:${site.email}?subject=Project%20enquiry`}>Email the team</a>
 				<a class="btn btn--dark" href={`tel:${site.phoneTel}`}>Call now</a>
 			</div>
 			<p class="contact__fineprint">Typical response: same business day for calls, 1–2 days for detailed email briefs.</p>

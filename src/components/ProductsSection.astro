@@ -34,7 +34,7 @@ function iconSvg(kind: (typeof products)[number]['icon']) {
 						<div class="card__icon" set:html={iconSvg(p.icon)} />
 						<h3 class="card__title">{p.title}</h3>
 						<p class="card__text">{p.description}</p>
-						<a class="card__link" href={p.href}>
+						<a class="card__link" href={p.href} data-open-inquiry>
 							Discuss this scope →
 						</a>
 					</article>
